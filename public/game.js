@@ -157,8 +157,6 @@ socket.on('updatePlayers', (backEndPlayers) => {
 
 
 let animationID
-let cameraX = 0
-let cameraY = 0
 
 // let score = 0
 function animate () {
@@ -166,12 +164,6 @@ function animate () {
     c.fillStyle = 'rgba(0, 0, 0, 0.1)'
     c.fillRect(0, 0, canvas.width, canvas.height)
 
-    //camera movement
-    const player = frontEndPlayers[socket.id]
-    if (player) {
-        cameraX = player.x - canvas.width / 2 (2 * devicePixelRatio)
-        cameraY = player.y - canvas.height / 2 (2 * devicePixelRatio)
-    }
 
     c.save()
     c.translate(-cameraX, -cameraY)
