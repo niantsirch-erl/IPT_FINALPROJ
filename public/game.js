@@ -164,9 +164,6 @@ function animate () {
     c.fillStyle = 'rgba(0, 0, 0, 0.1)'
     c.fillRect(0, 0, canvas.width, canvas.height)
 
-    c.save()
-    c.translate(-cameraX, -cameraY)
-
     for(const id in frontEndPlayers) {
         const frontEndPlayer = frontEndPlayers[id]
         frontEndPlayer.draw()
@@ -187,8 +184,6 @@ function animate () {
     // powerUPs.forEach(powerUP => {
     //     powerUP.draw();
     // })
-
-    c.restore()
     
 }
 
