@@ -165,6 +165,36 @@ setInterval(() => {
     // console.log(backEndProjectiles)
   }
 
+  for (const playerID in backEndplayers) {
+    const player = backEndplayers[playerID];
+    let collided = false;
+
+    if (player.x - RADIUS < 0) {
+      player.x = RADIUS;
+      collided = true;
+    }
+
+    if (player.x + RADIUS > player.canvas.width) {
+      player.x = player.canvas.width - RADIUS;
+      collided = true;
+    }
+
+    if (player.y - RADIUS < 0) {
+      player.y = RADIUS;
+      collided = true;
+    }
+
+    if (player.y + RADIUS > player.canvas.height) {
+      player.y = player.canvas.height - RADIUS;
+      collided = true;
+    }
+
+    if (collided) {
+
+      io.emit('playerCollision', { playerID, x: player.x, y: player.y });
+    }
+  }
+
   
 
   // for (const playerID in backEndplayers) {

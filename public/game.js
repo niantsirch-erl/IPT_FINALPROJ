@@ -157,6 +157,38 @@ socket.on('updatePlayers', (backEndPlayers) => {
 //     }
 // }, 1000)
 
+function checkPlayerBoundary() {
+    const player = frontEndPlayers[socket.id]
+    let collided = false;
+
+    if (player) {
+        if (player.x - player.radius < 0) {
+            player.x = player.radius;
+            collided = true;
+        }
+
+        if (player.x + player.radius > canvas.width) {
+            player.x = canvas.width - player.radius;
+            collided = true;
+        }
+
+        if (player.y - player.radius < 0) {
+            player.y = player.radius;
+            collided = true;
+        }
+
+        if (player.y + player.radius > canvas.height) {
+            player.y = canvas.height - player.radius;
+            collided = true;
+        }
+
+        if (collided) {
+            // Emit an event to notify the server about the collision
+            socket.emit('playerCollision', { x: player.x, y: player.y });
+        }
+    }
+}
+
 let animationID
 
 // let score = 0
@@ -164,6 +196,8 @@ function animate () {
     animationID = requestAnimationFrame(animate)
     // c.fillStyle = 'rgba(0, 0, 0, 0.1)'
     c.clearRect(0, 0, canvas.width, canvas.height)
+
+    checkPlayerBoundary()
 
     for(const id in frontEndPlayers) {
         const frontEndPlayer = frontEndPlayers[id]

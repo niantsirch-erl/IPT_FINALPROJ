@@ -9,14 +9,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     margin: 0;
-    background: #94a3b8;
+    background: rgb(10, 10, 10);
     
 }
 
 canvas {
     width: 1024px;
     height: 576px;
-    background-image: url('/Shooting_multiplayer/img/sep09.jpg');
+    background-image: url('https://i.ibb.co/CsVrG6T/webb-dark.png');
 }
 
 .styles{
