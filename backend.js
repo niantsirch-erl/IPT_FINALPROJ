@@ -102,6 +102,9 @@ io.on('connection', (socket) => {
   })
   
   socket.on('keydown', ({keyCode, sequenceNumber}) => {
+
+    if(backEndplayers[socket.id]) return
+
     backEndplayers[socket.id].sequenceNumber = sequenceNumber
     switch (keyCode) {
       case 'KeyW':

@@ -8,6 +8,9 @@ class Projectile{
     }
 
     draw(){
+        c.save()
+        c.shadowColor = this.color
+        c.shadowBlur = 10
         c.beginPath()
         c.arc(
                 this.x,
@@ -19,6 +22,7 @@ class Projectile{
             )
         c.fillStyle = this.color
         c.fill()
+        c.restore()
     }
 
     update(){

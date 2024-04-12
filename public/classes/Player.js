@@ -1,12 +1,19 @@
 class Player{
-    constructor({x, y, radius, color}) {
+    constructor({x, y, radius, color, username}) {
         this.x = x
         this.y = y
         this.radius = radius
-        this.color = color
+        this.color = color,
+        this.username = username
     }
 
     draw(){
+        c.font = '12px sans-serif'
+        c.fillStyle = 'white'
+        c.fillText(this.username, this.x - 25, this.y + 20)
+        c.save()
+        c.shadowColor = this.color
+        c.shadowBlur = 10
         c.beginPath()
         c.arc(this.x,
                 this.y,
@@ -17,5 +24,6 @@ class Player{
             )
         c.fillStyle = this.color
         c.fill()
+        c.restore()
     }
 }

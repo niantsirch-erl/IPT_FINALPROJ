@@ -61,7 +61,8 @@ socket.on('updatePlayers', (backEndPlayers) => {
                 x: backEndPlayer.x, 
                 y: backEndPlayer.y, 
                 radius: 10, 
-                color: backEndPlayer.color
+                color: backEndPlayer.color,
+                username: backEndPlayer.username
             })
 
             document.querySelector('#playerLabels').innerHTML += `<div data-id="${id}" data-score"${backEndPlayer.score}">${backEndPlayer.username}: ${backEndPlayer.score}</div>`
@@ -90,10 +91,13 @@ socket.on('updatePlayers', (backEndPlayers) => {
                 pareDiv.appendChild(div)
             })
 
+            frontEndPlayers[id].target = {
+                x: backEndPlayer.x,
+                y: backEndPlayer.y
+            }
+
             //if player exist
             if (id === socket.id) {
-                frontEndPlayers[id].x = backEndPlayer.x
-                frontEndPlayers[id].y = backEndPlayer.y
 
                 const lastBackEndInputIndex = playerInput.findIndex(input => {
                     return backEndPlayer.sequenceNumber === input.sequenceNumber
@@ -103,16 +107,8 @@ socket.on('updatePlayers', (backEndPlayers) => {
                     playerInput.splice(0, lastBackEndInputIndex + 1)
                 }
                 playerInput.forEach(input => {
-                    frontEndPlayers[id].x += input.dx
-                    frontEndPlayers[id].y += input.dy
-                })
-            }else{
-
-                gsap.to(frontEndPlayers[id], {
-                    x: backEndPlayer.x,
-                    y: backEndPlayer.y,
-                    duration: 0.015,
-                    ease: 'linear'
+                    frontEndPlayers[id].target.x += input.dx
+                    frontEndPlayers[id].target.y += input.dy
                 })
             }
         }
@@ -201,6 +197,11 @@ function animate () {
 
     for(const id in frontEndPlayers) {
         const frontEndPlayer = frontEndPlayers[id]
+
+        if (frontEndPlayer.target) {
+            frontEndPlayers[id].x += (frontEndPlayers[id].target.x - frontEndPlayers[id].x) * 0.5
+            frontEndPlayers[id].y += (frontEndPlayers[id].target.y - frontEndPlayers[id].y) * 0.5
+        }
         frontEndPlayer.draw()
     }
 
@@ -289,25 +290,25 @@ setInterval(() => {
     if (keys.w.pressed) {
         sequenceNumber++
         playerInput.push({sequenceNumber, dx: 0, dy: -SPEED})
-        frontEndPlayers[socket.id].y -= SPEED
+        // frontEndPlayers[socket.id].y -= SPEED
         socket.emit('keydown', {keyCode: 'KeyW', sequenceNumber})
     }
     if (keys.s.pressed) {
         sequenceNumber++
         playerInput.push({sequenceNumber, dx: 0, dy: SPEED})
-        frontEndPlayers[socket.id].y += SPEED
+        // frontEndPlayers[socket.id].y += SPEED
         socket.emit('keydown', {keyCode: 'KeyS', sequenceNumber})
     }SPEED
     if (keys.a.pressed) {
         sequenceNumber++
         playerInput.push({sequenceNumber, dx: -SPEED, dy: 0})
-        frontEndPlayers[socket.id].x -= SPEED
+        // frontEndPlayers[socket.id].x -= SPEED
         socket.emit('keydown', {keyCode: 'KeyA', sequenceNumber})
     }
     if (keys.d.pressed) {
         sequenceNumber++
         playerInput.push({sequenceNumber, dx: SPEED, dy: 0})
-        frontEndPlayers[socket.id].x += SPEED
+        // frontEndPlayers[socket.id].x += SPEED
         socket.emit('keydown', {keyCode: 'KeyD', sequenceNumber})
     }
 }, 15);
