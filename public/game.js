@@ -5,8 +5,10 @@ const socket = io()
 
 const devicePixelRatio = window.devicePixelRatio || 1
 
-canvas.width = innerWidth * devicePixelRatio
-canvas.height = innerHeight * devicePixelRatio
+canvas.width = 1024 * devicePixelRatio
+canvas.height = 576 * devicePixelRatio
+
+c.scale(devicePixelRatio, devicePixelRatio)
 
 const scoreID = document.querySelector('#scoreEl')
 const startGameBtn = document.querySelector('#startGameBtn')
@@ -155,7 +157,6 @@ socket.on('updatePlayers', (backEndPlayers) => {
 //     }
 // }, 1000)
 
-
 let animationID
 
 // let score = 0
@@ -186,18 +187,22 @@ function animate () {
     // })
     
 }
-
 // console.log(player)
 
 addEventListener('click', (event) => {
+    const canvas = document.querySelector('canvas')
+    const {
+        top, 
+        left
+    } = canvas.getBoundingClientRect()
     const playerPosition = {
         x: frontEndPlayers[socket.id].x,
         y: frontEndPlayers[socket.id].y
     }
 
     const angle = Math.atan2(
-        event.clientY * window.devicePixelRatio - playerPosition.y,
-        event.clientX * window.devicePixelRatio - playerPosition.x
+        (event.clientY - top) - playerPosition.y,
+        (event.clientX - left) - playerPosition.x
     )
     
     // const type = Math.random() < 0.5 ? 'slow' : 'fast'; 
