@@ -83,8 +83,8 @@ io.on('connection', (socket) => {
 
   socket.on('initGame', ({username, width, height}) => {
     backEndplayers[socket.id] = {
-      x: 500 * Math.random(),
-      y: 500 * Math.random(),
+      x: 1024 * Math.random(),
+      y: 576 * Math.random(),
       color: `hsl(${360 * Math.random()}, 50%, 50%)`,
       sequenceNumber: 0,
       score: 0,
