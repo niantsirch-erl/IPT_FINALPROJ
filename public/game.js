@@ -129,30 +129,6 @@ socket.on('updatePlayers', (backEndPlayers) => {
     
 })
 
-
-
-// socket.on('powerUpSpawn', (powerUpData) => {
-//     const powerUP = new PowerUp({
-//         x: powerUpData.x,
-//         y: powerUpData.y,
-//         radius: powerUpData.radius,
-//         color: powerUpData.color,
-//         type: powerUpData.type,
-//     });
-//     powerUPs.push(powerUP);
-//     // console.log(powerUP);
-// })
-
-// function spawnPowerUp() {
-//     socket.emit('spawnPowerUp')
-// }
-
-// setInterval(() => {
-//     if (powerUPs.length < MAX_POWERUP) {
-//         spawnPowerUp();
-//     }
-// }, 1000)
-
 function checkPlayerBoundary() {
     const player = frontEndPlayers[socket.id]
     let collided = false;
@@ -210,17 +186,7 @@ function animate () {
         frontEndProjectile.draw()
     }
 
-    // for (const powerUP of powerUPs) {
-    //     for (const id in frontEndProjectiles) {
-    //         const frontEndProjectile = frontEndProjectiles[id];
-    //         powerUP.checkCollision(frontEndProjectile);
-    //     }
-    // }
 
-    // powerUPs.forEach(powerUP => {
-    //     powerUP.draw();
-    // })
-    
 }
 // console.log(player)
 
@@ -239,22 +205,6 @@ addEventListener('click', (event) => {
         (event.clientY - top) - playerPosition.y,
         (event.clientX - left) - playerPosition.x
     )
-    
-    // const type = Math.random() < 0.5 ? 'slow' : 'fast'; 
-    // socket.emit('shoot', {
-    //     x: playerPosition.x,
-    //     y: playerPosition.y,
-    //     angle,
-    //     type, 
-    // })
-
-    // socket.emit('powerUpSpawn', {
-    //     x: playerPosition.x,
-    //     y: playerPosition.y,
-    //     radius: 10, 
-    //     color: 'blue', 
-    //     type: 'slow' 
-    // });
     
 
     socket.emit('shoot', {

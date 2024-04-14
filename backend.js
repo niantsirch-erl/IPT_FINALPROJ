@@ -33,30 +33,6 @@ io.on('connection', (socket) => {
 
   io.emit('updatePlayers', backEndplayers)
 
-  // socket.on('spawnPowerUp', () => {
-  //   const x = Math.random() * 500; 
-  //   const y = Math.random() * 500; 
-  //   const radius = 10; 
-  //   const color = 'yellow'
-  //   const type = Math.random() < 0.5 ? 'slow' : 'fast'
-
-  //   const powerUpData = {
-  //       x,
-  //       y,
-  //       radius,
-  //       color,
-  //       type
-  //   }
-  //   backEndPowerUps.push(powerUpData);
-  //   io.emit('powerUpSpawn', powerUpData);
-  // })
-
-  // setInterval(() => {
-  //   if (backEndPowerUps.length < MAX_POWERUP) {
-  //     socket.emit('spawnPowerUp');
-  //   }
-  // }, 1000)
-
   socket.on('shoot', ({x, y, angle}) => {
     projectileID++
 
@@ -103,7 +79,7 @@ io.on('connection', (socket) => {
   
   socket.on('keydown', ({keyCode, sequenceNumber}) => {
 
-    if(backEndplayers[socket.id]) return
+    if(!backEndplayers[socket.id]) return
 
     backEndplayers[socket.id].sequenceNumber = sequenceNumber
     switch (keyCode) {
@@ -197,28 +173,6 @@ setInterval(() => {
       io.emit('playerCollision', { playerID, x: player.x, y: player.y });
     }
   }
-
-  
-
-  // for (const playerID in backEndplayers) {
-  //   const player = backEndplayers[playerID];
-
-  //   for (let i = 0; i < backEndPowerUps.length; i++) {
-  //       const powerUp = backEndPowerUps[i];
-  //       const dist = Math.hypot(player.x - powerUp.x, player.y - powerUp.y);
-
-  //       if (dist - powerUp.radius - player.radius < 1) {
-  //           // Player collided with power-up, handle effect and remove power-up
-  //           // Apply power-up effect to the player if needed
-  //           console.log(`Player ${playerID} collided with power-up with type: ${powerUp.type}`);
-
-  //           // Remove the power-up from the array
-  //           backEndPowerUps.splice(i, 1);
-  //           break 
-  //       }
-  //   }
-  // }
-
 
   io.emit('updateProjectiles', backEndProjectiles)
   io.emit('updatePlayers', backEndplayers)
