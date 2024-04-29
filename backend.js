@@ -185,7 +185,3 @@ server.listen(port, () => {
 })
 
 console.log('server loaded')
-
-
-///IDEA
-/* Make the enemy spawn for points */
